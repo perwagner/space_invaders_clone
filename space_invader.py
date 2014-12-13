@@ -1,5 +1,6 @@
 import pygame
 import pygame.joystick as j
+import time
 
 #Initialize both joystick module and individual joystick
 j.init()
@@ -104,7 +105,7 @@ class UFO(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.height = self.image.get_height()
         self.width = self.image.get_width()
-        self.speed = 2
+        self.speed = 20
 
         self.rect = self.image.get_rect()
         self.rect.y = y
@@ -140,7 +141,7 @@ def main_game_loop():
 
     player1 = Ship(js)
     score = 0
-
+    hit_player = []
     columns = 9
     rows = 3
     col_y = 50
@@ -178,7 +179,6 @@ def main_game_loop():
             if bul.rect.y < 0:
                 bul.kill()
 
-
         for bullet in bullet_group:
             hit_enemies = pygame.sprite.spritecollide(bullet, enemy_group, True)
 
@@ -189,13 +189,15 @@ def main_game_loop():
                     all_sprites_group.remove(enemy)
                     score += 1
 
+        hit_player = pygame.sprite.spritecollide(player1, enemy_group, False)
 
         #Drawing
         screen.fill(BLACK)
         all_sprites_group.draw(screen)
         text = "Kills: " + str(score)
         print_text(text, 10, 10, size=15, color=WHITE, fontname='Arial')
-
+        if len(hit_player) > 0:
+            print_text("YOU ARE DEAD", 100, DISPLAY_HEIGHT//2-50, size=100, color=WHITE)
 
         #Updates the screen
         pygame.display.update()
