@@ -105,7 +105,7 @@ class UFO(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.height = self.image.get_height()
         self.width = self.image.get_width()
-        self.speed = 20
+        self.speed = 3
 
         self.rect = self.image.get_rect()
         self.rect.y = y
